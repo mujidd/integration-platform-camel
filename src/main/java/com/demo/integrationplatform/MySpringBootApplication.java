@@ -1,4 +1,4 @@
-package com.demo.IntegrationPlatform;
+package com.demo.integrationplatform;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

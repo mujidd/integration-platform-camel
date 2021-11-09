@@ -1,3 +1,19 @@
 camel:
   springboot:
+    name: MyCamel
     main-run-controller: true
+
+  servlet:
+    mapping:
+      context-path: /api/*
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hawtio,jolokia
+
+hawtio:
+  authenticationEnabled: false
+
+greeting: hellofoo
+

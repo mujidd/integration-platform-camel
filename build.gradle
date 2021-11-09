@@ -31,9 +31,10 @@ version = '0.0.1-SNAPSHOT'
 //sourceCompatibility = '11'
 
 repositories {
-//    mavenLocal()
+    mavenLocal()
     mavenCentral()
-//    jcenter()
+    maven{ url = uri("https://maven.aliyun.com/repository/central") }
+    maven{ url = uri("https://maven.aliyun.com/repository/public") }
 }
 
 sourceSets {
@@ -43,23 +44,32 @@ sourceSets {
 }
 
 dependencies {
-//    implementation platform('org.springframework.boot:spring-boot-dependencies:2.5.3')
-//    implementation platform('org.apache.camel.springboot:camel-spring-boot-bom:3.12.0')
-    implementation "org.springframework.boot:spring-boot-starter-web"{
-        exclude group: '*', module: 'spring-boot-starter-tomcat'
+    //spring boot
+    implementation ('org.springframework.boot:spring-boot-starter-web'){
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
     }
+    implementation "org.springframework.boot:spring-boot-starter-undertow"
     implementation "org.springframework.boot:spring-boot-starter"
+
+    //camel
     implementation "org.apache.camel.springboot:camel-spring-boot-starter"
-//    implementation "org.apache.camel.springboot:camel-servlet-starter"
-//    implementation "org.apache.camel.springboot:camel-jackson-starter"
-//    implementation "org.apache.camel.springboot:camel-swagger-java-starter"
+    implementation "org.apache.camel.springboot:camel-stream-starter"
+    implementation "org.apache.camel.springboot:camel-servlet-starter"
+    implementation "org.apache.camel.springboot:camel-jackson-starter"
+    implementation "org.apache.camel.springboot:camel-swagger-java-starter"
+    implementation 'org.apache.camel:camel-management'
+
+    //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    //hawtio
+    implementation 'io.hawt:hawtio-springboot:2.14.0'
+
 }
 
 dependencyManagement {
     imports {
         mavenBom "org.apache.camel.springboot:camel-spring-boot-dependencies:${camelVersion}"
-//        mavenBom "org.apache.camel.springboot:camel-spring-boot-bom:${camelVersion}"
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
