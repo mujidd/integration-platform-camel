@@ -1,0 +1,65 @@
+buildscript {
+    def nexus_username = System.getProperty("nexus_username")
+    def nexus_password = System.getProperty("nexus_password")
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+    }
+
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("io.spring.gradle:dependency-management-plugin:${dependencyManagementPlugin}")
+        classpath "org.springframework.cloud:spring-cloud-contract-gradle-plugin:${springCloudContractGradlePlugin}"
+        classpath "com.palantir.gradle.gitversion:gradle-git-version:${gradleGitVersion}"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'idea'
+apply plugin: 'maven'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.palantir.git-version'
+
+def nexus_username = System.getProperty("nexus_username")
+def nexus_password = System.getProperty("nexus_password")
+def sonar_password = System.getProperty("sonar_password")
+
+group = 'com.demo'
+version = '0.0.1-SNAPSHOT'
+//sourceCompatibility = '11'
+
+repositories {
+//    mavenLocal()
+    mavenCentral()
+//    jcenter()
+}
+
+sourceSets {
+    main.java.srcDir "src/main/java"
+    main.resources.srcDir "src/main/resources"
+    test.java.srcDir "src/test/java"
+}
+
+dependencies {
+//    implementation platform('org.springframework.boot:spring-boot-dependencies:2.5.3')
+//    implementation platform('org.apache.camel.springboot:camel-spring-boot-bom:3.12.0')
+    implementation "org.springframework.boot:spring-boot-starter-web"{
+        exclude group: '*', module: 'spring-boot-starter-tomcat'
+    }
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.apache.camel.springboot:camel-spring-boot-starter"
+//    implementation "org.apache.camel.springboot:camel-servlet-starter"
+//    implementation "org.apache.camel.springboot:camel-jackson-starter"
+//    implementation "org.apache.camel.springboot:camel-swagger-java-starter"
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.apache.camel.springboot:camel-spring-boot-dependencies:${camelVersion}"
+//        mavenBom "org.apache.camel.springboot:camel-spring-boot-bom:${camelVersion}"
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
