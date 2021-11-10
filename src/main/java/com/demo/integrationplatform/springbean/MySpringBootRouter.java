@@ -1,4 +1,4 @@
-package com.demo.integrationplatform;
+package com.demo.integrationplatform.springbean;
 
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;

@@ -14,38 +14,37 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.demo.integrationplatform.restrouter;
-
-import org.springframework.stereotype.Service;
+package com.demo.integrationplatform.restswaggerrouter;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.TreeMap;
 
-@Service("userService")
-public class UserServiceImpl implements UserService {
+/**
+ * Service interface for managing users.
+ */
+public interface UserService {
 
-    private final Map<Integer, User> users = new TreeMap<>();
+    /**
+     * Find a user by the given ID
+     *
+     * @param id
+     *            the ID of the user
+     * @return the user, or <code>null</code> if user not found.
+     */
+    User findUser(Integer id);
 
-    public UserServiceImpl() {
-        users.put(1, new User(1, "John Coltrane"));
-        users.put(2, new User(2, "Miles Davis"));
-        users.put(3, new User(3, "Sonny Rollins"));
-    }
+    /**
+     * Find all users
+     *
+     * @return a collection of all users
+     */
+    Collection<User> findUsers();
 
-    @Override
-    public User findUser(Integer id) {
-        return users.get(id);
-    }
-
-    @Override
-    public Collection<User> findUsers() {
-        return users.values();
-    }
-
-    @Override
-    public void updateUser(User user) {
-        users.put(user.getId(), user);
-    }
+    /**
+     * Update the given user
+     *
+     * @param user
+     *            the user
+     */
+    void updateUser(User user);
 
 }

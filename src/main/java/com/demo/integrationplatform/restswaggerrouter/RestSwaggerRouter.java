@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.demo.integrationplatform.restrouter;
+package com.demo.integrationplatform.restswaggerrouter;
 
 import org.apache.camel.Exchange;
 import org.apache.camel.builder.RouteBuilder;
@@ -31,7 +31,7 @@ import static org.apache.camel.model.rest.RestParamType.path;
  * A simple Camel REST DSL route with Swagger API documentation.
  */
 @Component
-public class CamelRouter extends RouteBuilder {
+public class RestSwaggerRouter extends RouteBuilder {
     
     @Autowired
     private Environment env;
@@ -74,12 +74,12 @@ public class CamelRouter extends RouteBuilder {
             .put("/{id}").description("Update a user").type(User.class)
                 .param().name("id").type(path).description("The ID of the user to update").dataType("integer").endParam()    
                 .param().name("body").type(body).description("The user to update").endParam()
-                .responseMessage().code(204).message("User successfully updated").endResponseMessage()
+//                .responseMessage().code(204).message("User successfully updated").endResponseMessage()
                 .to("direct:update-user");
         
         from("direct:update-user")
             .to("bean:userService?method=updateUser")
-            .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(204))
+//            .setHeader(Exchange.HTTP_RESPONSE_CODE, constant(204))
             .setBody(constant(""));
 
         // @formatter:on

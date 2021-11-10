@@ -56,11 +56,13 @@ dependencies {
     implementation "org.apache.camel.springboot:camel-stream-starter"
     implementation "org.apache.camel.springboot:camel-servlet-starter"
     implementation "org.apache.camel.springboot:camel-jackson-starter"
-    implementation "org.apache.camel.springboot:camel-swagger-java-starter"
-    implementation 'org.apache.camel:camel-management'
+    implementation "org.apache.camel.springboot:camel-swagger-java-starter"  //support swagger api-doc
+    implementation "org.apache.camel.springboot:camel-http-starter"  //use http as rest producer
+    implementation 'org.apache.camel:camel-management' //support hawtio
 
     //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.apache.camel:camel-test-spring'
 
     //hawtio
     implementation 'io.hawt:hawtio-springboot:2.14.0'
@@ -69,7 +71,9 @@ dependencies {
 
 dependencyManagement {
     imports {
+        //Camel BOM
         mavenBom "org.apache.camel.springboot:camel-spring-boot-dependencies:${camelVersion}"
+        //spring Cloud BOM
         mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
     }
 }
