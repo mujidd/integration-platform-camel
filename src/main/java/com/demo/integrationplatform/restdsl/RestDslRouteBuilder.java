@@ -2,6 +2,7 @@ package com.demo.integrationplatform.restdsl;
 
 import com.demo.integrationplatform.restdsl.types.PostRequestType;
 import com.demo.integrationplatform.restdsl.types.ResponseType;
+import org.apache.camel.CamelExecutionException;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
@@ -14,8 +15,6 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RestDslRouteBuilder extends RouteBuilder {
-
-    @Override
     public void configure() throws Exception {
 
         // This section is required - it tells Camel how to configure the REST service

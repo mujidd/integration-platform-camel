@@ -2,10 +2,20 @@ camel:
   springboot:
     name: MyCamel
     main-run-controller: true
+    routesIncludePattern: "classpath:camel/*,classpath:camel-template/*,classpath:camel-rest/*,dynamicConfig:routerDefinition"
+  component:
+    # ServletComponentConfiguration
+    servlet:
+      enabled: true
+      # ServletMappingConfiguration
+      mapping:
+        # 只有禁用掉系统默认的ServletMappingAutoConfiguration, 才能启用我们自定义的ServletMappingAutoConfiguration
+        enabled: false
 
   servlet:
     mapping:
       context-path: /api/*
+
 management:
   endpoints:
     web:
@@ -16,4 +26,16 @@ hawtio:
   authenticationEnabled: false
 
 greeting: hellofoo
+timer:
+  period: 10000
 
+header:
+    CamelTimerCounter: test11
+
+routerDefinition:
+
+#log4j:
+#  logger:
+#    org:
+#      apache:
+#        camel: DEBUG

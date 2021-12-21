@@ -1,0 +1,49 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+skinparam backgroundColor #EEEBDC
+'skinparam handwritten true
+
+skinparam sequence {
+'ArrowColor DeepSkyBlue
+'ActorBorderColor DeepSkyBlue
+'LifeLineBorderColor blue
+'LifeLineBackgroundColor #A9DCDF
+'
+'ParticipantBorderColor DeepSkyBlue
+'ParticipantBackgroundColor DodgerBlue
+'ParticipantFontName Impact
+'ParticipantFontSize 17
+'ParticipantFontColor #A9DCDF
+'
+'ActorBackgroundColor aqua
+'ActorFontColor DeepSkyBlue
+'ActorFontSize 17
+'ActorFontName Aapex
+}
+
+autonumber
+
+CamelSpringBootApplicationListener -> RoutesConfigurer: configureRoutes(camelContext)
+RoutesConfigurer -> DefaultRoutesCollector: collectRoutesFromDirectory(camelContext\n,getRoutesExcludePattern()\n,getRoutesIncludePattern())
+DefaultRoutesCollector -> DefaultRoutesCollector: ExtendedCamelContext ecc\n = camelContext.adapt(ExtendedCamelContext.class)
+DefaultRoutesCollector -> ExtendedCamelContext: getPackageScanResourceResolver()
+DefaultRoutesCollector <-- ExtendedCamelContext: PackageScanResourceResolver resolver
+loop Iincludes
+DefaultRoutesCollector -> DefaultPackageScanResourceResolver: findResources(include)
+DefaultPackageScanResourceResolver -> ExtendedCamelContext: getResourceLoader()
+DefaultPackageScanResourceResolver <-- ExtendedCamelContext: ResourceLoader loader
+DefaultPackageScanResourceResolver -> DefaultResourceLoader: resolveResource(location)
+DefaultPackageScanResourceResolver -> ExtendedCamelContext: getResourceResolver(scheme)
+DefaultPackageScanResourceResolver <-- ExtendedCamelContext: ResourceResolver rr
+DefaultPackageScanResourceResolver -> DefaultResourceResolvers:resolve(uri)
+DefaultPackageScanResourceResolver <-- DefaultResourceResolvers:Resource resource
+DefaultRoutesCollector <-- DefaultPackageScanResourceResolver: Resource resource
+DefaultRoutesCollector -> DefaultResourceLoader: findRoutesBuilders(resource)
+DefaultRoutesCollector <-- DefaultResourceLoader: Collection<RoutesBuilder> builders
+end
+RoutesConfigurer <-- DefaultRoutesCollector: Collection<RoutesBuilder> routesFromDirectory
+RoutesConfigurer -> RoutesConfigurer: routes.addAll(routesFromDirectory)
+loop builder : routes
+RoutesConfigurer -> ExtendedCamelContext: addRoutes(builder)
+end
+@enduml
