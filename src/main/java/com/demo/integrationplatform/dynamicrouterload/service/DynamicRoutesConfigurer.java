@@ -1,4 +1,4 @@
-package com.demo.integrationplatform.dynamicrouterload;
+package com.demo.integrationplatform.dynamicrouterload.service;
 
 import org.apache.camel.CamelContext;
 

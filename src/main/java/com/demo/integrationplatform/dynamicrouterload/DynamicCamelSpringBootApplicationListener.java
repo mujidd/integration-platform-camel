@@ -1,5 +1,6 @@
 package com.demo.integrationplatform.dynamicrouterload;
 
+import com.demo.integrationplatform.dynamicrouterload.service.DynamicRoutesConfigurer;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ExtendedCamelContext;
 import org.apache.camel.main.RoutesConfigurer;

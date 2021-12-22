@@ -50,6 +50,9 @@ dependencies {
     }
 //    implementation "org.springframework.boot:spring-boot-starter-undertow"
     implementation "org.springframework.boot:spring-boot-starter"
+    //database
+    compile("com.microsoft.sqlserver:mssql-jdbc:7.2.2.jre8")
+    compile ('org.springframework.boot:spring-boot-starter-data-jpa')
 
     //camel
     implementation "org.apache.camel.springboot:camel-spring-boot-starter"
@@ -75,6 +78,11 @@ dependencies {
 
     //hawtio
     implementation 'io.hawt:hawtio-springboot:2.14.0'
+
+    //tool
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    implementation group: 'org.apache.commons', name: 'commons-lang3'
 
 }
 
