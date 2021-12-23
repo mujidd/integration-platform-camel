@@ -1,0 +1,20 @@
+<camelContext xmlns="http://camel.apache.org/schema/spring">
+    <route id="jolt-test" rest="true">
+        <from uri="rest://post:/rest:/jolt-test?consumerComponentName=servlet&amp;consumes=application/json&amp;outType=com.demo.integrationplatform.restdsl.types.ResponseType&amp;produces=application/json&amp;routeId=jolt-test"/>
+        <to uri="direct:call-cfs-service"/>
+    </route>
+
+    <route id="call-cfs-service">
+        <from uri="direct:call-cfs-service"/>
+        <to uri="bean:dynaConf?method=process('100001')"/>
+        <log message="${body}"/>
+        <convertBodyTo type="java.lang.String"/>
+        <log message="${body}"/>
+    </route>
+
+    <rest path="/rest">
+        <post uri="/jolt-test" consumes="application/json" produces="application/json">
+            <to uri="direct:call-cfs-service"/>
+        </post>
+    </rest>
+</camelContext>

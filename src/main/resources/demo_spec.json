@@ -1,0 +1,14 @@
+[
+  {
+    "operation": "shift",
+    "spec": {
+      "body": {
+        "@": "&0"
+      },
+      "header": {
+        "guid": "body.guid",
+        "openid": "body.openid"
+      }
+    }
+  }
+]

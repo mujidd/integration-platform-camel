@@ -27,12 +27,10 @@ hawtio:
 
 greeting: hellofoo
 timer:
-  period: 10000
+  period: 100000
 
 header:
     CamelTimerCounter: test11
-
-routerDefinition:
 
 #log4j:
 #  logger:

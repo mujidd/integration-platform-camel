@@ -84,6 +84,9 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     implementation group: 'org.apache.commons', name: 'commons-lang3'
 
+    //jolt
+    implementation 'com.bazaarvoice.jolt:jolt-core:0.1.5'
+    implementation 'com.bazaarvoice.jolt:json-utils:0.1.5'
 }
 
 dependencyManagement {

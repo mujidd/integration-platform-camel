@@ -6,7 +6,6 @@ import org.apache.camel.impl.engine.DefaultPackageScanResourceResolver;
 import org.apache.camel.spi.Resource;
 import org.apache.camel.support.ResourceHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
@@ -20,9 +19,6 @@ import java.util.Set;
  */
 @Component("dynamicPackageScanResourceResolver")
 public class DynamicPackageScanResourceResolver extends DefaultPackageScanResourceResolver {
-
-    @Value("${routerDefinition}")
-    private String routerDefinition;
 
     @Autowired
     private RouterRepository routerRepository;
