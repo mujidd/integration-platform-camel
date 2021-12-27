@@ -2,5 +2,5 @@ package com.demo.integrationplatform.dynamicrouterload.entity;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface JsSpectRepository extends JpaRepository<JsSpectEntity, Long> {
+public interface JsSpecRepository extends JpaRepository<JsSpecEntity, Long> {
 }

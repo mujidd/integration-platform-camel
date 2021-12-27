@@ -1,16 +1,14 @@
-package com.demo.integrationplatform.springbean.jolt;
+package com.demo.integrationplatform.dynamicrouterload.service.jolt;
 
 import com.bazaarvoice.jolt.Chainr;
 import com.bazaarvoice.jolt.JsonUtils;
 import com.demo.integrationplatform.dynamicrouterload.constant.Define;
-import com.demo.integrationplatform.dynamicrouterload.entity.JsSpectEntity;
-import com.demo.integrationplatform.dynamicrouterload.entity.JsSpectRepository;
-import com.demo.integrationplatform.dynamicrouterload.entity.RouterRepository;
+import com.demo.integrationplatform.dynamicrouterload.entity.JsSpecEntity;
+import com.demo.integrationplatform.dynamicrouterload.entity.JsSpecRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
 import org.apache.camel.Exchange;
 import org.apache.camel.Message;
-import org.apache.camel.Processor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
@@ -21,10 +19,13 @@ import java.util.List;
 import java.util.Map;
 
 @Component("dynaConf")
-public class DynamicConfig {
+public class DynamicDataMapping {
 
     @Autowired
-    private JsSpectRepository jsSpectRepository;
+    private JsSpecRepository jsSpecRepository;
+
+    @Autowired
+    private DynamicDateMappingService dynamicDateMappingService;
 
     private ObjectMapper jsonUtil = new ObjectMapper();
 
@@ -66,7 +67,7 @@ public class DynamicConfig {
                 }
 
                 // json will be got from DB
-                List<Object> specList = getSpectsById(specId);
+                List<Object> specList = getSpecsByName("spec_test");
                 transformedJson = doTransform(allInOneMap, specList);
 
 //                msg.setBody(transformedJson);
@@ -75,13 +76,8 @@ public class DynamicConfig {
         return transformedJson;
     }
 
-    private List<Object> getSpectsById(Long specId) {
-        //                List<Object> specList = getSpectsById(specId);
-        //                String specJson = "/demo_spec.json";
-        //                List<Object> specList = JsonUtils.classpathToList(specJson);
-        //TODO cache spec or load spec when init
-        JsSpectEntity jsSpectEntity = jsSpectRepository.findById(specId).get();
-        String specJsonContents = jsSpectEntity.getJoltSpec();
+    private List<Object> getSpecsByName(String name) {
+        String specJsonContents = dynamicDateMappingService.selectDateMappingCache(name);
         return JsonUtils.jsonToList(specJsonContents);
     }
 

@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Table(name = "js_spec")
-public class JsSpectEntity {
+public class JsSpecEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,8 +21,8 @@ public class JsSpectEntity {
 
     @Column(name="jolt_spec")
     private String joltSpec;
-    @Column(name="router_name")
-    private String routerName;
+    @Column(name="spec_title")
+    private String specTitle;
     @Column(name="ep_in_dto")
     private String epInDto;
     @Column(name="ep_out_dto")
