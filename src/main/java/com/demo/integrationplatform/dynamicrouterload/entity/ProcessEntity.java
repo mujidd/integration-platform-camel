@@ -12,17 +12,19 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "router")
-public class RouterEntity {
+@Table(name = "process")
+public class ProcessEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="router_name")
-    private String routerName;
-    @Column(name="router_flow")
-    private String routerFlow;
+    @Column(name="process_name")
+    private String processName;
+    @Column(name="process_flow")
+    private String processFlow;
+    @Column(name="status")
+    private String status;
     @Column(name="create_time")
     private String createTime;
 }

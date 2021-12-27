@@ -1,0 +1,6 @@
+package com.demo.integrationplatform.dynamicrouterload.entity;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ProcessRepository extends JpaRepository<ProcessEntity, Long> {
+}

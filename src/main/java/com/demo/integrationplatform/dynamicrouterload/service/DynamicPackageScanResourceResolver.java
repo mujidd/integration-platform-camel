@@ -1,10 +1,15 @@
 package com.demo.integrationplatform.dynamicrouterload.service;
 
+import com.demo.integrationplatform.dynamicrouterload.DynamicCamelAutoConfiguration;
+import com.demo.integrationplatform.dynamicrouterload.entity.ProcessEntity;
+import com.demo.integrationplatform.dynamicrouterload.entity.ProcessRepository;
 import com.demo.integrationplatform.dynamicrouterload.entity.RouterEntity;
 import com.demo.integrationplatform.dynamicrouterload.entity.RouterRepository;
 import org.apache.camel.impl.engine.DefaultPackageScanResourceResolver;
 import org.apache.camel.spi.Resource;
 import org.apache.camel.support.ResourceHelper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -20,8 +25,14 @@ import java.util.Set;
 @Component("dynamicPackageScanResourceResolver")
 public class DynamicPackageScanResourceResolver extends DefaultPackageScanResourceResolver {
 
+    private static final Logger LOG = LoggerFactory.getLogger(DynamicPackageScanResourceResolver.class);
+
     @Autowired
     private RouterRepository routerRepository;
+
+    @Autowired
+    private ProcessRepository processRepository;
+
 
     @Override
     public Collection<Resource> findResources(String location) throws Exception {
@@ -43,18 +54,10 @@ public class DynamicPackageScanResourceResolver extends DefaultPackageScanResour
         return ("dynamicConfig:".equals(scheme));
     }
 
-    private void doFindDynamicResources(String location, Set<Resource> answer) {
-        List<RouterEntity> routerEntityList = routerRepository.findAll();
-        if(CollectionUtils.isEmpty(routerEntityList)){
-            return;
-        }
-        for(RouterEntity routerEntity : routerEntityList)
-        {
-            String routerDefinitionXml =routerEntity.getRouterFlow();
-            String routerName =routerEntity.getRouterName();
-            Resource resource = ResourceHelper.fromString(routerName+".xml", routerDefinitionXml);
-            answer.add(resource);
-        }
+    private void doFindDynamicResources(String location, Set<Resource> resources) {
+        LoadProcess(resources);
+        LoadRouters(resources);
+        LOG.info("load dynamic router and process completed & count is {}", resources.size());
 //        String routerDefinitionXml = "    <route id=\"dynamicRouter\">\n" +
 //                "      <from uri=\"timer:hello?period={{timer.period}}\"/>\n" +
 //                "      <transform>\n" +
@@ -68,5 +71,48 @@ public class DynamicPackageScanResourceResolver extends DefaultPackageScanResour
 //                "    </route>";
 //        Resource resource1 = ResourceHelper.fromString("resource.xml", routerDefinitionXml);
 //        answer.add(resource1);
+    }
+
+    private void LoadProcess(Set<Resource> resources) {
+        List<ProcessEntity> processEntities = processRepository.findAll();
+        if(CollectionUtils.isEmpty(processEntities)){
+            return;
+        }
+        for(ProcessEntity processEntity : processEntities)
+        {
+            try
+            {
+                String processDefinitionXml =processEntity.getProcessFlow();
+                String processName =processEntity.getProcessName();
+                Resource resource = ResourceHelper.fromString(processName+"process.xml", processDefinitionXml);
+                resources.add(resource);
+            }
+            catch (Exception e)
+            {
+                LOG.error("load dynamic process failed: {}", processEntity);
+            }
+        }
+    }
+
+    private void LoadRouters(Set<Resource> resources) {
+        List<RouterEntity> routerEntityList = routerRepository.findAll();
+        if(CollectionUtils.isEmpty(routerEntityList)){
+            return;
+        }
+        for(RouterEntity routerEntity : routerEntityList)
+        {
+            try
+            {
+                String routerDefinitionXml =routerEntity.getRouterFlow();
+                String routerName =routerEntity.getRouterName();
+                Resource resource = ResourceHelper.fromString(routerName+"router.xml", routerDefinitionXml);
+                resources.add(resource);
+            }
+            catch (Exception e)
+            {
+                LOG.error("load dynamic router failed: {}", routerEntity);
+            }
+
+        }
     }
 }

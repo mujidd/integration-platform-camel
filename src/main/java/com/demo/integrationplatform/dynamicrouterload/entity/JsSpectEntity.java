@@ -21,10 +21,12 @@ public class JsSpectEntity {
 
     @Column(name="jolt_spec")
     private String joltSpec;
+    @Column(name="router_name")
+    private String routerName;
     @Column(name="ep_in_dto")
     private String epInDto;
     @Column(name="ep_out_dto")
     private String epOutDto;
-    @Column(name="timestamp")
-    private String timestamp;
+    @Column(name="create_time")
+    private String createTime;
 }
