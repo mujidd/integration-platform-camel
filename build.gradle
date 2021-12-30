@@ -83,11 +83,15 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     implementation group: 'org.apache.commons', name: 'commons-lang3'
+    implementation group: 'org.apache.commons', name: 'commons-collections4', version: '4.4'
     implementation group: 'com.alicp.jetcache', name: 'jetcache-starter-redis', version: '2.6.2'
 
     //jolt
     implementation 'com.bazaarvoice.jolt:jolt-core:0.1.5'
     implementation 'com.bazaarvoice.jolt:json-utils:0.1.5'
+
+    //schema
+    compile 'com.networknt:json-schema-validator:1.0.64'
 }
 
 dependencyManagement {

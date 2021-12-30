@@ -6,7 +6,8 @@
 
     <route id="call-cfs-service">
         <from uri="direct:call-cfs-service"/>
-        <to uri="bean:dynaConf?method=process('100001')"/>
+        <to uri="bean:dynaVerify?method=process('schema_test')"/>
+        <to uri="bean:dynaConf?method=process('spec_test')"/>
         <log message="${body}"/>
         <convertBodyTo type="java.lang.String"/>
         <log message="${body}"/>
@@ -16,5 +17,10 @@
         <post uri="/jolt-test" consumes="application/json" produces="application/json">
             <to uri="direct:call-cfs-service"/>
         </post>
+    </rest>
+    <rest path="/rest">
+        <get uri="/jolt-test" consumes="application/json" produces="application/json">
+            <to uri="direct:call-cfs-service"/>
+        </get>
     </rest>
 </camelContext>
