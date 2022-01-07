@@ -23,6 +23,8 @@ public class RouterEntity {
     private String routerName;
     @Column(name="router_flow")
     private String routerFlow;
+    @Column(name="status")
+    private String status;
     @Column(name="create_time")
     private String createTime;
 }

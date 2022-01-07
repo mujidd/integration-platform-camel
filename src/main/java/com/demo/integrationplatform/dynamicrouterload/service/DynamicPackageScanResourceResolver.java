@@ -58,23 +58,10 @@ public class DynamicPackageScanResourceResolver extends DefaultPackageScanResour
         LoadProcess(resources);
         LoadRouters(resources);
         LOG.info("load dynamic router and process completed & count is {}", resources.size());
-//        String routerDefinitionXml = "    <route id=\"dynamicRouter\">\n" +
-//                "      <from uri=\"timer:hello?period={{timer.period}}\"/>\n" +
-//                "      <transform>\n" +
-//                "        <method ref=\"myBean\" method=\"saySomething\"/>\n" +
-//                "      </transform>\n" +
-//                "      <filter>\n" +
-//                "        <simple>${body} contains 'foo'</simple>\n" +
-//                "        <to uri=\"log:foo\"/>\n" +
-//                "      </filter>\n" +
-//                "      <to uri=\"stream:out\"/>\n" +
-//                "    </route>";
-//        Resource resource1 = ResourceHelper.fromString("resource.xml", routerDefinitionXml);
-//        answer.add(resource1);
     }
 
     private void LoadProcess(Set<Resource> resources) {
-        List<ProcessEntity> processEntities = processRepository.findAll();
+        List<ProcessEntity> processEntities = processRepository.findAllByStatus("s");
         if(CollectionUtils.isEmpty(processEntities)){
             return;
         }
@@ -95,7 +82,7 @@ public class DynamicPackageScanResourceResolver extends DefaultPackageScanResour
     }
 
     private void LoadRouters(Set<Resource> resources) {
-        List<RouterEntity> routerEntityList = routerRepository.findAll();
+        List<RouterEntity> routerEntityList = routerRepository.findAllByStatus("s");
         if(CollectionUtils.isEmpty(routerEntityList)){
             return;
         }

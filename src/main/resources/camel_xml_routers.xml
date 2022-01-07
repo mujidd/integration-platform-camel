@@ -1,9 +1,4 @@
 <camelContext xmlns="http://camel.apache.org/schema/spring">
-    <route id="jolt-test" rest="true">
-        <from uri="rest://post:/rest:/jolt-test?consumerComponentName=servlet&amp;consumes=application/json&amp;outType=com.demo.integrationplatform.restdsl.types.ResponseType&amp;produces=application/json&amp;routeId=jolt-test"/>
-        <to uri="direct:call-cfs-service"/>
-    </route>
-
     <route id="call-cfs-service">
         <from uri="direct:call-cfs-service"/>
         <to uri="bean:dynaVerify?method=process('schema_test')"/>
@@ -14,13 +9,97 @@
     </route>
 
     <rest path="/rest">
-        <post uri="/jolt-test" consumes="application/json" produces="application/json">
+        <post uri="/jolt-test" consumes="application/json" produces="application/json" id="e-jolt-test">
             <to uri="direct:call-cfs-service"/>
         </post>
     </rest>
-    <rest path="/rest">
-        <get uri="/jolt-test" consumes="application/json" produces="application/json">
-            <to uri="direct:call-cfs-service"/>
-        </get>
+    <!--biz demo data start-->
+    <route id="validator">
+        <from uri="direct:validator"/>
+        <log message="${body}"/>
+    </route>
+    <route id="dataMapping">
+        <from uri="direct:dataMapping"/>
+        <log message="${body}"/>
+    </route>
+    <route id="signCheck">
+        <from uri="direct:signCheck"/>
+        <log message="${body}"/>
+    </route>
+    <route id="decrypt">
+        <from uri="direct:decrypt"/>
+        <log message="${body}"/>
+    </route>
+    <route id="decryptOpenid">
+        <from uri="direct:decryptOpenid"/>
+        <log message="${body}"/>
+    </route>
+    <route id="getVin">
+        <from uri="direct:getVin"/>
+        <log message="${body}"/>
+    </route>
+    <route id="getGuid">
+        <from uri="direct:getGuid"/>
+        <log message="${body}"/>
+    </route>
+    <route id="call-cms-lidget">
+        <from uri="direct:call-cms-lidget"/>
+        <log message="${body}"/>
+    </route>
+    <route id="fileProcess">
+        <from uri="direct:fileProcess"/>
+        <log message="${body}"/>
+    </route>
+    <route id="encrypt">
+        <from uri="direct:encrypt"/>
+        <log message="${body}"/>
+    </route>
+    <route id="checkSign">
+        <from uri="direct:checkSign"/>
+        <log message="${body}"/>
+    </route>
+    <route id="createSign">
+        <from uri="direct:createSign"/>
+        <log message="${body}"/>
+    </route>
+
+
+    <rest path="/rest" id="e-feedback-content" customId="true">
+        <post uri="/feedback-content" consumes="application/json" produces="application/json" id="e-feedback-content">
+            <to uri="direct:r-feedback-content"/>
+        </post>
     </rest>
+    <route id="r-feedback-content">
+        <from uri="direct:r-feedback-content"/>
+        <to uri="direct:validator"/>
+        <to uri="direct:dataMapping"/>
+        <to uri="direct:decrypt"/>
+        <to uri="direct:decryptOpenid"/>
+        <to uri="direct:getVin"/>
+        <to uri="direct:getGuid"/>
+        <to uri="direct:call-cfs-service"/>
+    </route>
+    <!--biz demo data end-->
+
+    <!--enrich demo data start-->
+    <route id="updateBody">
+        <from uri="direct:updateBody"/>
+        <setBody>
+            <simple>Hello 222</simple>
+        </setBody>
+        <to uri="log:hello"/>
+    </route>
+    <route id="r-enrich-demo ">
+        <from uri="direct:r-enrich-demo"/>
+        <enrich strategyRef="useHeadsAggregationStrategy">
+            <constant>direct:updateBody</constant>
+        </enrich>
+        <log message="Got ${body}"/>
+    </route>
+    <rest path="/rest">
+        <post uri="/enrich-test" consumes="application/json" produces="application/json" id="e-enrich-test">
+            <to uri="direct:r-enrich-demo"/>
+        </post>
+    </rest>
+    <!--enrich demo data end-->
 </camelContext>
