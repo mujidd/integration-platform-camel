@@ -18,7 +18,7 @@ public class CacheApplicationRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        dynamicDateMappingService.LoadAllDateMapping();
-        dynamicValidatorService.LoadAllValidator();
+        dynamicDateMappingService.init();
+        dynamicValidatorService.init();
     }
 }

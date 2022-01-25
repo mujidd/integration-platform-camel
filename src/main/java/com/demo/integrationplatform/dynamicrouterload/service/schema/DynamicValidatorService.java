@@ -1,6 +1,7 @@
 package com.demo.integrationplatform.dynamicrouterload.service.schema;
 
 public interface DynamicValidatorService {
+    void init();
 
     void LoadAllValidator();
 

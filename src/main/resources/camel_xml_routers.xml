@@ -97,6 +97,12 @@
         <log message="Got ${body}"/>
     </route>
     <rest path="/rest">
+        <onException>
+            <exception>java.lang.Exception</exception>
+            <to uri="bean:camelExceptionHandler?method=handleCamelExecutionException"/>
+            <stop/>
+            <log message="Received Exception during camel routing"/>
+        </onException>
         <post uri="/enrich-test" consumes="application/json" produces="application/json" id="e-enrich-test">
             <to uri="direct:r-enrich-demo"/>
         </post>

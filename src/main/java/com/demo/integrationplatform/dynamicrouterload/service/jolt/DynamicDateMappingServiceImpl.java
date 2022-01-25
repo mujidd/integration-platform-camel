@@ -1,6 +1,9 @@
 package com.demo.integrationplatform.dynamicrouterload.service.jolt;
 
 import com.alicp.jetcache.Cache;
+import com.alicp.jetcache.anno.CachePenetrationProtect;
+import com.alicp.jetcache.anno.CacheRefresh;
+import com.alicp.jetcache.anno.CacheType;
 import com.alicp.jetcache.anno.CreateCache;
 import com.demo.integrationplatform.dynamicrouterload.entity.JsSpecEntity;
 import com.demo.integrationplatform.dynamicrouterload.entity.JsSpecRepository;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Component
 public class DynamicDateMappingServiceImpl implements DynamicDateMappingService{
@@ -21,7 +25,25 @@ public class DynamicDateMappingServiceImpl implements DynamicDateMappingService{
     private JsSpecRepository jsSpecRepository;
 
     @CreateCache(name = "dateMappingCache")
+    @CacheRefresh(refresh = 30, timeUnit = TimeUnit.MINUTES)
+    @CachePenetrationProtect
     private Cache<String, String> dateMappingCache;
+
+    @Override
+    public void init(){
+        LoadAllDateMapping();
+        dateMappingCache.config().setLoader(this::loadDateMappingFromDB);
+    }
+
+    private String loadDateMappingFromDB(String specTitle) {
+        try {
+            return jsSpecRepository.findBySpecTitle(specTitle).stream().findFirst().get().getJoltSpec();
+        }
+        catch (Exception e){
+            LOG.error("Refresh date mapping failed : {}", specTitle);
+            return "";
+        }
+    }
 
     @Override
     public void LoadAllDateMapping() {
