@@ -2,7 +2,7 @@ camel:
   springboot:
     name: MyCamel
     main-run-controller: true
-    routesIncludePattern: "classpath:camel/*,classpath:camel-template/*,classpath:camel-rest/*,dynamicConfig:routerDefinition"
+    routesIncludePattern: "classpath:camel/*,classpath:camel-template/*,classpath:camel-rest/*"
   component:
     # ServletComponentConfiguration
     servlet:

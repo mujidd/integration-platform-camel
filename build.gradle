@@ -60,6 +60,7 @@ dependencies {
     implementation "org.apache.camel.springboot:camel-http-starter"  //use http as rest producer
     implementation "org.apache.camel.springboot:camel-mail-starter"
     implementation "org.apache.camel.springboot:camel-yaml-dsl-starter"
+    implementation "org.apache.camel.springboot:camel-kafka-starter"
 
     //camel spring could integration
 //    implementation "org.apache.camel.springboot:camel-ribbon-starter"
