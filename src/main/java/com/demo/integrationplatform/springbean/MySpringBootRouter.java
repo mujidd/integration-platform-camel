@@ -10,20 +10,14 @@ public class MySpringBootRouter extends RouteBuilder {
     final String brokers = "ivislevents.servicebus.chinacloudapi.cn:9093";
     @Override
     public void configure() {
-//        kafka(topic)
-//                .brokers(props.getProperty("bootstrap.servers"))
-//                .saslMechanism(props.getProperty("sasl.mechanism"))
-//                .securityProtocol(props.getProperty("security.protocol"))
-//                .sslEndpointAlgorithm(props.getProperty("ssl.endpoint.identification.algorithm"))
-//                .saslJaasConfig(props.getProperty("sasl.jaas.config")))
-        from("timer:hello?period=5000").routeId("camel")
-                .setBody(constant("Message from Camel"))          // Message to send
-                .setHeader(KafkaConstants.KEY, constant("Camel")) // Key of the message
-                .to("kafka:loginevents?"
-                        + "brokers=" + brokers
-                        + "&saslMechanism=PLAIN"
-                        + "&securityProtocol=SASL_SSL"
-                        + "&saslJaasConfig=" + saslJaasConfig);
+//        from("timer:hello?period=5000").routeId("camel")
+//                .setBody(constant("Message from Camel"))          // Message to send
+//                .setHeader(KafkaConstants.KEY, constant("Camel")) // Key of the message
+//                .to("kafka:loginevents?"
+//                        + "brokers=" + brokers
+//                        + "&saslMechanism=PLAIN"
+//                        + "&securityProtocol=SASL_SSL"
+//                        + "&saslJaasConfig=" + saslJaasConfig);
         from("kafka:loginevents?"
                 + "brokers=" + brokers
                 + "&saslMechanism=PLAIN"
