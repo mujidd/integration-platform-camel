@@ -14,7 +14,7 @@ camel:
 
   servlet:
     mapping:
-      context-path: /api/*
+      context-path: /app-router/*
 
 management:
   endpoints:

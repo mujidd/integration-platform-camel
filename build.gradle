@@ -61,6 +61,7 @@ dependencies {
     implementation "org.apache.camel.springboot:camel-mail-starter"
     implementation "org.apache.camel.springboot:camel-yaml-dsl-starter"
     implementation "org.apache.camel.springboot:camel-kafka-starter"
+    implementation "org.apache.camel.springboot:camel-azure-eventhubs-starter"
 
     //camel spring could integration
 //    implementation "org.apache.camel.springboot:camel-ribbon-starter"
@@ -76,6 +77,10 @@ dependencies {
 
     //hawtio
     implementation 'io.hawt:hawtio-springboot:2.14.0'
+
+    //event hub
+    implementation 'com.microsoft.azure:msal4j:1.11.3'
+
 
 }
 
