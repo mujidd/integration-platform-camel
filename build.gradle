@@ -80,7 +80,7 @@ dependencies {
 
     //event hub
     implementation 'com.microsoft.azure:msal4j:1.11.3'
-
+    implementation 'com.microsoft.azure:azure-eventhubs:3.3.0'
 
 }
 
