@@ -44,8 +44,6 @@ public class CustomAuthenticateCallbackHandler implements AuthenticateCallbackHa
         bootstrapServer = bootstrapServer.replaceAll("\\[|\\]", "");
         URI uri = URI.create("https://" + bootstrapServer);
         String sbUri = uri.getScheme() + "://" + uri.getHost();
-        sbUri ="https://ivislevents.servicebus.windows.net";
-//        sbUri ="https://eventhubs.azure.net/";
         this.aadParameters =
                 ClientCredentialParameters.builder(Collections.singleton(sbUri + "/.default"))
                         .build();

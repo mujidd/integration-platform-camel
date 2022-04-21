@@ -22,8 +22,8 @@
         <setHeader name="kafka.KEY">
             <constant>Camel</constant>
         </setHeader>
-        <to uri="kafka:loginevents?brokers=ivislevents.servicebus.chinacloudapi.cn:9093&amp;saslMechanism=PLAIN&amp;securityProtocol=SASL_SSL&amp;saslJaasConfig=RAW(org.apache.kafka.common.security.plain.PlainLoginModule required username=&quot;$ConnectionString&quot; password=&quot;Endpoint=sb://ivislevents.servicebus.chinacloudapi.cn/;SharedAccessKeyName=test;SharedAccessKey=ZiA2sJN2Q4TJ1JHAxBRUchjm+NLAZCi+i+xjMXUJHK8=;EntityPath=loginevents&quot;;)"/>
-<!--        <to uri="kafka:loginevents?brokers=ivislevents.servicebus.chinacloudapi.cn:9093&amp;saslMechanism=OAUTHBEARER&amp;securityProtocol=SASL_SSL&amp;saslJaasConfig=RAW(org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required;)&amp;additionalProperties.sasl.login.callback.handler.class=com.demo.integrationplatform.eventhub.CustomAuthenticateCallbackHandler"/>-->
+<!--        <to uri="kafka:loginevents?brokers=ivislevents.servicebus.chinacloudapi.cn:9093&amp;saslMechanism=PLAIN&amp;securityProtocol=SASL_SSL&amp;saslJaasConfig=RAW(org.apache.kafka.common.security.plain.PlainLoginModule required username=&quot;$ConnectionString&quot; password=&quot;Endpoint=sb://ivislevents.servicebus.chinacloudapi.cn/;SharedAccessKeyName=test;SharedAccessKey=ZiA2sJN2Q4TJ1JHAxBRUchjm+NLAZCi+i+xjMXUJHK8=;EntityPath=loginevents&quot;;)"/>-->
+        <to uri="kafka:loginevents?brokers=ivislevents.servicebus.chinacloudapi.cn:9093&amp;saslMechanism=OAUTHBEARER&amp;securityProtocol=SASL_SSL&amp;saslJaasConfig=RAW(org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required;)&amp;additionalProperties.sasl.login.callback.handler.class=com.demo.integrationplatform.eventhub.CustomAuthenticateCallbackHandler"/>
 
     </route>
     <route id="aa-e-eventhub-loginStatus" rest="true">
