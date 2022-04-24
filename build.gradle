@@ -64,10 +64,11 @@ dependencies {
     implementation "org.apache.camel.springboot:camel-azure-eventhubs-starter"
 
     //camel spring could integration
-//    implementation "org.apache.camel.springboot:camel-ribbon-starter"
-//    implementation "org.apache.camel.springboot:camel-service-starter"
-//    implementation "org.apache.camel.springboot:camel-spring-cloud-starter"
-//    implementation 'org.apache.camel.springboot:camel-spring-cloud-netflix-starter'//register server Euraka support
+    implementation "org.apache.camel.springboot:camel-ribbon-starter"
+    implementation "org.apache.camel.springboot:camel-service-starter"
+    implementation "org.apache.camel.springboot:camel-spring-cloud-starter"
+    implementation 'org.apache.camel.springboot:camel-spring-cloud-netflix-starter'//register server Euraka support
+    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
 
     implementation 'org.apache.camel:camel-management' //support hawtio
 

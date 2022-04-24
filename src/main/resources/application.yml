@@ -11,6 +11,8 @@ camel:
       mapping:
         # 只有禁用掉系统默认的ServletMappingAutoConfiguration, 才能启用我们自定义的ServletMappingAutoConfiguration
         enabled: false
+    http:
+#      socket-timeout: 1000
 
   servlet:
     mapping:
@@ -39,3 +41,5 @@ routerDefinition:
 #    org:
 #      apache:
 #        camel: DEBUG
+
+

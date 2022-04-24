@@ -14,29 +14,14 @@
     limitations under the License.
 -->
 <routes xmlns="http://camel.apache.org/schema/spring">
-    <route id="e-eventhub-test">
-        <from uri="timer:hello?period=50000"/>
-        <setBody>
-            <constant>Message from Camel</constant>
-        </setBody>
-        <setHeader name="kafka.KEY">
-            <constant>Camel</constant>
+    <route>
+        <from uri="timer:hello?period=10000"/>
+        <setHeader name="CamelHttpMethod">
+            <constant>GET</constant>
         </setHeader>
-<!--        <to uri="kafka:loginevents?brokers=ivislevents.servicebus.chinacloudapi.cn:9093&amp;saslMechanism=PLAIN&amp;securityProtocol=SASL_SSL&amp;saslJaasConfig=RAW(org.apache.kafka.common.security.plain.PlainLoginModule required username=&quot;$ConnectionString&quot; password=&quot;Endpoint=sb://ivislevents.servicebus.chinacloudapi.cn/;SharedAccessKeyName=test;SharedAccessKey=ZiA2sJN2Q4TJ1JHAxBRUchjm+NLAZCi+i+xjMXUJHK8=;EntityPath=loginevents&quot;;)"/>-->
-        <to uri="kafka:loginevents?brokers=ivislevents.servicebus.chinacloudapi.cn:9093&amp;saslMechanism=OAUTHBEARER&amp;securityProtocol=SASL_SSL&amp;saslJaasConfig=RAW(org.apache.kafka.common.security.oauthbearer.OAuthBearerLoginModule required;)&amp;additionalProperties.sasl.login.callback.handler.class=com.demo.integrationplatform.eventhub.CustomAuthenticateCallbackHandler"/>
-
-    </route>
-    <route id="aa-e-eventhub-loginStatus" rest="true">
-        <from uri="rest://post:/v1/d/is-eventhub/loginStatus?consumerComponentName=servlet&amp;consumes=application%2Fjson&amp;produces=application%2Fjson&amp;routeId=aa-e-eventhub-loginStatus"/>
-        <to uri="direct:eventhub"/>
-    </route>
-    <route id="aa-eventhub-process">
-        <from uri="direct:eventhub"/>
-        <to uri="kafka:loginevents?brokers=ivislevents.servicebus.chinacloudapi.cn:9093&amp;saslMechanism=PLAIN&amp;securityProtocol=SASL_SSL&amp;saslJaasConfig=RAW(org.apache.kafka.common.security.plain.PlainLoginModule required username=&quot;$ConnectionString&quot; password=&quot;Endpoint=sb://ivislevents.servicebus.chinacloudapi.cn/;SharedAccessKeyName=test;SharedAccessKey=ZiA2sJN2Q4TJ1JHAxBRUchjm+NLAZCi+i+xjMXUJHK8=;EntityPath=loginevents&quot;;)"/>
-        <log message="call kafka success and body is : ${body}"/>
-    </route>
-    <route id="aa-eventhub-handle">
-        <from uri="kafka:loginevents?brokers=ivislevents.servicebus.chinacloudapi.cn:9093&amp;saslMechanism=PLAIN&amp;securityProtocol=SASL_SSL&amp;saslJaasConfig=RAW(org.apache.kafka.common.security.plain.PlainLoginModule required username=&quot;$ConnectionString&quot; password=&quot;Endpoint=sb://ivislevents.servicebus.chinacloudapi.cn/;SharedAccessKeyName=test;SharedAccessKey=ZiA2sJN2Q4TJ1JHAxBRUchjm+NLAZCi+i+xjMXUJHK8=;EntityPath=loginevents&quot;;)"/>
-        <log message="kafka body is  ${body}"/>
+        <log message="serviceCall start"/>
+        <serviceCall name="TEST/delay?bridgeEndpoint=true&amp;socketTimeout=1000"/>
+        <serviceCall name="TEST/delay?bridgeEndpoint=true"/>
+        <log message="serviceCall end"/>
     </route>
 </routes>
