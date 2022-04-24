@@ -53,9 +53,11 @@ public class RestDslRouteBuilder extends RouteBuilder {
                 .to("direct:call-pets-service");
 
         from("direct:call-pets-service")
+                .onException(Exception.class).handled(true).log("error").end()
                 .setHeader("id", simple("${random(1,3)}"))
                 .to("rest:get:pets/{id}")
+                .throwException(new Exception())
                 .convertBodyTo(String.class)
-                .log("${body}");
+                .log("call-pets-service body: ${body}");
     }
 }

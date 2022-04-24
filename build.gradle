@@ -68,6 +68,10 @@ dependencies {
 //    implementation 'org.apache.camel.springboot:camel-spring-cloud-netflix-starter'//register server Euraka support
 
     implementation 'org.apache.camel:camel-management' //support hawtio
+    implementation 'org.apache.camel.springboot:camel-metrics-starter'
+    compile("org.springframework.boot:spring-boot-starter-actuator")
+    compile("io.micrometer:micrometer-registry-prometheus")
+    compile("org.apache.camel.springboot:camel-micrometer-starter")
 
     //test
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

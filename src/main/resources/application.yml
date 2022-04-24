@@ -2,7 +2,7 @@ camel:
   springboot:
     name: MyCamel
     main-run-controller: true
-    routesIncludePattern: "classpath:camel/*,classpath:camel-template/*,classpath:camel-rest/*,dynamicConfig:routerDefinition"
+    routesIncludePattern: "classpath:camel/*,classpath:camel-template/*,classpath:camel-rest/*"
   component:
     # ServletComponentConfiguration
     servlet:
@@ -11,6 +11,8 @@ camel:
       mapping:
         # 只有禁用掉系统默认的ServletMappingAutoConfiguration, 才能启用我们自定义的ServletMappingAutoConfiguration
         enabled: false
+    metrics:
+      metric-registry: prometheusMeterRegistry
 
   servlet:
     mapping:
@@ -20,7 +22,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: hawtio,jolokia
+        include: hawtio,jolokia,prometheus
 
 hawtio:
   authenticationEnabled: false
