@@ -1,3 +1,6 @@
+spring:
+  application:
+    name: camel
 camel:
   springboot:
     name: MyCamel
@@ -36,8 +39,8 @@ header:
 
 routerDefinition:
 
-#log4j:
-#  logger:
-#    org:
-#      apache:
-#        camel: DEBUG
+log4j:
+  logger:
+    org:
+      apache:
+        camel: DEBUG

@@ -2,8 +2,10 @@ package com.demo.integrationplatform.restdsl;
 
 import com.demo.integrationplatform.restdsl.types.PostRequestType;
 import com.demo.integrationplatform.restdsl.types.ResponseType;
+import io.micrometer.core.instrument.Tags;
 import org.apache.camel.CamelExecutionException;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.micrometer.MicrometerConstants;
 import org.apache.camel.model.rest.RestBindingMode;
 import org.springframework.stereotype.Component;
 
@@ -53,7 +55,11 @@ public class RestDslRouteBuilder extends RouteBuilder {
                 .to("direct:call-pets-service");
 
         from("direct:call-pets-service")
-                .onException(Exception.class).handled(true).log("error").end()
+                .onException(Exception.class).handled(true)
+                .to("micrometer:counter:camel.api.counter?tags=Method=${header.CamelHttpMethod}=uri=${header.CamelHttpUri}=status=${header.CamelHttpResponseCode}")
+                .to("log:afterProcess?showHeaders=true")
+                .end()
+                .log("test")
                 .setHeader("id", simple("${random(1,3)}"))
                 .to("rest:get:pets/{id}")
                 .throwException(new Exception())

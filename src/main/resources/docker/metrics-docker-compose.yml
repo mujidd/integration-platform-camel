@@ -1,0 +1,29 @@
+version: "3.2"
+
+networks:
+  metrics:
+    external: true
+
+services:
+  prometheus:
+    container_name: prometheus
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+      - --storage.tsdb.path=/prometheus
+      - --web.console.libraries=/usr/share/prometheus/console_libraries
+      - --web.console.templates=/usr/share/prometheus/consoles
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - metrics
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    ports:
+    - 3000:3000
+    networks:
+      - metrics
