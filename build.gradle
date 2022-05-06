@@ -80,8 +80,6 @@ dependencies {
     //hawtio
     implementation 'io.hawt:hawtio-springboot:2.14.0'
 
-    implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
-
 }
 
 dependencyManagement {

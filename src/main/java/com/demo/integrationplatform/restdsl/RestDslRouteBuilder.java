@@ -62,7 +62,7 @@ public class RestDslRouteBuilder extends RouteBuilder {
                 .log("test")
                 .setHeader("id", simple("${random(1,3)}"))
                 .to("rest:get:pets/{id}")
-                .throwException(new Exception())
+//                .throwException(new Exception())
                 .convertBodyTo(String.class)
                 .log("call-pets-service body: ${body}");
     }
