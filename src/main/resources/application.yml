@@ -1,3 +1,6 @@
+spring:
+  application:
+    name: camel
 camel:
   springboot:
     name: MyCamel
