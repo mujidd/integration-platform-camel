@@ -1,5 +1,6 @@
 package com.demo.integrationplatform.config;
 
+import com.demo.integrationplatform.micrometer.RestMicrometerRoutePolicyNamingStrategy;
 import io.micrometer.core.instrument.Tag;
 import io.micrometer.core.instrument.Tags;
 import org.springframework.boot.actuate.metrics.web.servlet.WebMvcTags;
@@ -78,7 +79,7 @@ public class CustomizedWebMvcTagsProvider implements WebMvcTagsProvider {
             if (pathInfo.isEmpty()) {
                 return URI_ROOT;
             }
-            return Tag.of("uri", pathInfo);
+            return URI_ROOT;
         }
         return URI_UNKNOWN;
     }
@@ -87,6 +88,10 @@ public class CustomizedWebMvcTagsProvider implements WebMvcTagsProvider {
         PathPattern dataRestPathPattern = (PathPattern) request.getAttribute(DATA_REST_PATH_PATTERN_ATTRIBUTE);
         if (dataRestPathPattern != null) {
             return dataRestPathPattern.getPatternString();
+        }
+        String uriTemplate = (String) request.getAttribute(RestMicrometerRoutePolicyNamingStrategy.REST_ROUTER_URI_TEMPLATE);
+        if (uriTemplate != null) {
+            return uriTemplate;
         }
         return (String) request.getAttribute(HandlerMapping.BEST_MATCHING_PATTERN_ATTRIBUTE);
     }

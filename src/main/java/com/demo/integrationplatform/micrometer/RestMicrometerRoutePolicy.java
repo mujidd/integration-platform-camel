@@ -9,13 +9,18 @@ import org.apache.camel.component.micrometer.MicrometerUtils;
 import org.apache.camel.component.micrometer.routepolicy.MicrometerRoutePolicyNamingStrategy;
 import org.apache.camel.component.micrometer.routepolicy.MicrometerRoutePolicyService;
 import org.apache.camel.component.rest.RestEndpoint;
+import org.apache.camel.component.servlet.ServletEndpoint;
+import org.apache.camel.http.common.HttpMessage;
+import org.apache.camel.support.DefaultExchange;
 import org.apache.camel.support.ExchangeHelper;
 import org.apache.camel.support.RoutePolicySupport;
 import org.apache.camel.support.service.ServiceHelper;
 import org.apache.camel.util.ObjectHelper;
+import org.apache.catalina.connector.RequestFacade;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.demo.integrationplatform.micrometer.RestMicrometerRoutePolicyNamingStrategy.REST_ROUTER_URI_TEMPLATE;
 import static org.apache.camel.component.micrometer.MicrometerConstants.*;
 
 public class RestMicrometerRoutePolicy extends RoutePolicySupport implements NonManagedService {
@@ -50,6 +55,11 @@ public class RestMicrometerRoutePolicy extends RoutePolicySupport implements Non
 
         public void onExchangeBegin(Exchange exchange) {
             Timer.Sample sample = Timer.start(meterRegistry);
+            // create statistics holder for rest endpoint
+            if (exchange.getIn() instanceof HttpMessage && exchange.getFromEndpoint() instanceof ServletEndpoint)
+            {
+                ((HttpMessage) exchange.getIn()).getRequest().setAttribute(REST_ROUTER_URI_TEMPLATE,((ServletEndpoint) exchange.getFromEndpoint()).getContextPath());
+            }
             exchange.setProperty(propertyName(exchange), sample);
         }
 

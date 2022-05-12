@@ -15,6 +15,7 @@ public class RestMicrometerRoutePolicyNamingStrategy implements MicrometerRouteP
     public static final String REST_ROUTER_URI_TAG = "uri";
     public static final String REST_ROUTER_URI_METHOD = "method";
     public static final String REST_ROUTER_URI_STATUS = "status";
+    public static final String REST_ROUTER_URI_TEMPLATE = "restRouterURITemplate";
 
     @Override
     public String getName(Route route) {

@@ -39,7 +39,7 @@ public class RestDslRouteBuilder extends RouteBuilder {
                 .produces("application/json")
 
                 // HTTP: GET /rest
-                .get()
+                .get("/{id}")
                 .outType(ResponseType.class) // Setting the response type enables Camel to marshal the response to JSON
                 .to("bean:getBean") // This will invoke the Spring bean 'getBean'
 
